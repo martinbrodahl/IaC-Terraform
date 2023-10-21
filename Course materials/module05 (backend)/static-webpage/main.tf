@@ -5,12 +5,12 @@ resource "random_string" "random_string" {
 }
 
 resource "azurerm_resource_group" "rg-web" {
-  name     = var.rg_web_name
+  name     = local.rg_web_name
   location = var.rg_web_location
 }
 
 resource "azurerm_storage_account" "sa-web" {
-  name                     = var.sa_web_name
+  name                     = local.sa_web_name
   resource_group_name      = azurerm_resource_group.rg-web.name
   location                 = azurerm_resource_group.rg-web.location
   account_tier             = "Standard"
@@ -27,6 +27,6 @@ resource "azurerm_storage_blob" "index_html" {
   storage_container_name = "$web"
   type                   = "Block"
   content_type           = "text/html"
-  source_content         = var.source_content
+  source_content         = local.source_content
 }
 
