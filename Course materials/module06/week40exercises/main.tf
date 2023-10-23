@@ -68,4 +68,4 @@ resource "azurerm_storage_blob" "index_html" {
   source_content         = local.source_content
 }
 
-# Destroy nr 3
+# Destroy nr 4
