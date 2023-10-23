@@ -6,10 +6,10 @@ terraform {
     }
   }
   backend "azurerm" {
-    resource_group_name  = ""
-    storage_account_name = ""
-    container_name       = ""
-    key                  = ""
+    resource_group_name  = "rg-backend-tfstate-week39"
+    storage_account_name = "sabtfstatezzg70n9zod"
+    container_name       = "sc-backend-tfstate-week39"
+    key                  = "vidWeek42.terraform.tfstate"
   }
   # key                  = "assign2-${local.workspaces_suffix}.terraform.tfstate"
 }
