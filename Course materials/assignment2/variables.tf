@@ -107,6 +107,6 @@ variable "common_tags_company" {
 
 variable "common_tags_project" {
   type = string
-  default = "OperaTerra AS"
+  default = "Assignment 1, IIK3005 IaC"
   description = "Name of project, used in 'common_tags'"
 }
