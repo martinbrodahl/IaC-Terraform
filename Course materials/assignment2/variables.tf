@@ -95,3 +95,18 @@ variable "vm_username" {
   default     = "demoadmin"
   description = "Username for the virtual machine"
 }
+
+##################################
+###### Variables for locals ######
+##################################
+variable "common_tags_company" {
+  type = string
+  default = "OperaTerra AS"
+  description = "Name of company, used in 'common_tags'"
+}
+
+variable "common_tags_project" {
+  type = string
+  default = "OperaTerra AS"
+  description = "Name of project, used in 'common_tags'"
+}
