@@ -1,12 +1,12 @@
 resource "azurerm_public_ip" "vm-pip" {
-  name                = "${var.pip_name}-${var.base_name}"
+  name                = "${local.pip_name}-${var.base_name}"
   resource_group_name = azurerm_resource_group.rg-infra.name
   location            = azurerm_resource_group.rg-infra.location
   allocation_method   = "Static"
 }
 
 resource "azurerm_network_interface" "vm-nic" {
-  name                = "${var.vm_nic_name}-${var.base_name}"
+  name                = "${local.vm_nic_name}-${var.base_name}"
   location            = azurerm_resource_group.rg-infra.location
   resource_group_name = azurerm_resource_group.rg-infra.name
 
@@ -19,7 +19,7 @@ resource "azurerm_network_interface" "vm-nic" {
 }
 
 resource "azurerm_linux_virtual_machine" "vm-linux" {
-  name                            = "${var.vm_name}-${var.base_name}"
+  name                            = "${local.vm_name}-${var.base_name}"
   resource_group_name             = azurerm_resource_group.rg-infra.name
   location                        = azurerm_resource_group.rg-infra.location
   size                            = "Standard_F2"
