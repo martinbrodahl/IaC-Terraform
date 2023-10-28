@@ -29,7 +29,7 @@ resource "azurerm_key_vault" "kv" {
   }
 }
 
-resource "azurerm_key_vault_secret" "sa_accesskey" {
+resource "azurerm_key_vault_secret" "sa-accesskey" {
   name         = "${var.sa_accesskey_name}${azurerm_storage_account.sa.name}"
   value        = azurerm_storage_account.sa.primary_access_key
   key_vault_id = azurerm_key_vault.kv.id
@@ -38,7 +38,7 @@ resource "azurerm_key_vault_secret" "sa_accesskey" {
   ]
 }
 
-resource "azurerm_key_vault_secret" "vm_password" {
+resource "azurerm_key_vault_secret" "vm-password" {
   name         = "${var.vm_name}${random_string.random_string.result}"
   value        = random_password.password.result
   key_vault_id = azurerm_key_vault.kv.id

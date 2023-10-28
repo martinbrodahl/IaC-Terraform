@@ -19,12 +19,12 @@ resource "azurerm_subnet" "subnet" {
   address_prefixes     = ["10.0.0.0/24"]
 }
 
-resource "azurerm_subnet_network_security_group_association" "nsg_snet_association" {
+resource "azurerm_subnet_network_security_group_association" "nsg-snet-association" {
   subnet_id                 = azurerm_subnet.subnet.id
   network_security_group_id = azurerm_network_security_group.nsg.id
 }
 
-resource "azurerm_network_security_rule" "ssh_inbound_myIP" {
+resource "azurerm_network_security_rule" "ssh-inbound-myIP" {
   name                        = "SSHInboundMyIP"
   priority                    = 101
   direction                   = "Inbound"
