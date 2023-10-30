@@ -14,7 +14,7 @@ resource "azurerm_network_interface" "vm-nic" {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.subnet.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.pip_vm.id
+    public_ip_address_id          = azurerm_public_ip.vm-pip.id
   }
 }
 
@@ -24,10 +24,10 @@ resource "azurerm_linux_virtual_machine" "vm-linux" {
   location                        = azurerm_resource_group.rg-infra.location
   size                            = "Standard_F2"
   admin_username                  = var.vm_username
-  admin_password                  = azurerm_key_vault_secret.vm_password.value
+  admin_password                  = azurerm_key_vault_secret.vm-password.value
   disable_password_authentication = false
   network_interface_ids = [
-    azurerm_network_interface.vm_nic.id,
+    azurerm_network_interface.vm-nic.id,
   ]
 
   os_disk {

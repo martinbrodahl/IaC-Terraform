@@ -17,6 +17,6 @@ resource "random_password" "password" {
 }
 
 output "vm_password" {
-  value     = azurerm_key_vault_secret.vm_password.value
+  value     = azurerm_key_vault_secret.vm-password
   sensitive = true
 }
