@@ -70,7 +70,6 @@ jobs:
       runs-on: ubuntu-latest
       environment: 
         name: production
-        url: ${{ steps.get_web_endpoint.outputs.WEB_ENDPOINT }} # replace deploy_prod and web_url with actual output variables
       steps:
         - name: Checkout
           uses: actions/checkout@v3
