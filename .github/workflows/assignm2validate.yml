@@ -6,7 +6,7 @@ name: 'Assigment 2: Validate, format, tflint'
 on:
   # Triggers the workflow on push or pull request events
   push:
-    branches-ignore:
+    branches:
       - 'main'
     paths:
       - 'Course materials/assignment2/**'
@@ -15,7 +15,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains three jobs called; "fmt", "validate" and "tflint"
+  # This workflow contains three jobs called: "fmt", "validate" and "tflint"
 
   fmt:
     name: "Format"
