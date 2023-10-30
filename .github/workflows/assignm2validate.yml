@@ -6,8 +6,10 @@ name: 'Assigment 2: Validate, format, tflint'
 on:
   # Triggers the workflow on push or pull request events
   push:
-    branches-ignore:
-      - 'main'
+    branches:
+      - 'dev'
+      - 'staging'
+      - 'prod'
     paths:
       - 'Course materials/assignment2/**'
 
@@ -15,7 +17,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains three jobs called; "fmt", "validate" and "tflint"
+  # This workflow contains three jobs called: "fmt", "validate" and "tflint"
 
   fmt:
     name: "Format"
@@ -73,6 +75,7 @@ jobs:
         run: terraform validate
         working-directory: ${{ env.WORKING_DIR }}
   
+  
   tflint:
     name: 'TFlint'
     # The type of runner that the job will run on
@@ -84,10 +87,3 @@ jobs:
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       WORKING_DIR: ./Course materials/assignment2
-      
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
-
-      # Runs a single command using the runners shell

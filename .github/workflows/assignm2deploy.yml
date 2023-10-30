@@ -4,42 +4,88 @@ name: 'Assignment 2: Deploy infrastructure'
 
 # Controls when the workflow will run
 on:
-  push:
+  pull_request:
     branches:
-      - 'main'
+      - 'dev'
+      - 'staging'
+      - 'prod' 
     paths:
       - 'Course materials/assignment2/**'
-      
-jobs:
-  terraform:
-    runs-on: ubuntu-latest
-    
-    name: 'deploy infrastructure'
-    env:
-      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      WORKING_DIR: ./Course materials/assignment2
-      
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      - uses: actions/checkout@v4
 
-      # Initialize Terraform
-      - name: Terraform init
-        id: init
-        run: terraform init
-        working-directory: ${{ env.WORKING_DIR }}
-      
-      # Generate a plan for Terraform changes
-      - name: Terraform plan
-        id: plan
-        run: terraform plan
-        working-directory: ${{ env.WORKING_DIR }}
-      
-      # Apply Terraform changes
-      - name: Terraform apply
-        id: apply
-        run: terraform apply -auto-approve
-        working-directory: ${{ env.WORKING_DIR }}
+env:
+  ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+  ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+  ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+  WORKING_DIR: ./Course materials/assignment2
+  
+jobs:
+    dev_stage:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v3
+        
+        - name: Terraform init
+          run: terraform init
+          working-directory: ${{ env.WORKING_DIR }}
+          
+        - name: Terraform workspace select or create dev
+          run: terraform workspace select dev || terraform workspace new dev
+          working-directory: ${{ env.WORKING_DIR }}
+        
+        - name: Terraform plan
+          run: terraform plan
+          working-directory: ${{ env.WORKING_DIR }}
+        
+        - name: Terraform apply dev
+          run: terraform apply -auto-approve
+          working-directory: ${{ env.WORKING_DIR }}
+  
+    stage_prod:
+      needs: dev_stage
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v3
+        
+        - name: Terraform init
+          run: terraform init
+          working-directory: ${{ env.WORKING_DIR }}
+          
+        - name: Terraform workspace select or create stage
+          run: terraform workspace select stage || terraform workspace new stage
+          working-directory: ${{ env.WORKING_DIR }}
+        
+        - name: Terraform plan
+          run: terraform plan
+          working-directory: ${{ env.WORKING_DIR }}
+        
+        - name: Terraform apply stage
+          run: terraform apply -auto-approve
+          working-directory: ${{ env.WORKING_DIR }}
+  
+    prod:
+      needs: stage_prod
+      runs-on: ubuntu-latest
+      environment: 
+        name: production
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v3
+        
+        - name: Terraform init
+          run: terraform init
+          working-directory: ${{ env.WORKING_DIR }}
+          
+        - name: Terraform workspace select or create prod
+          run: terraform workspace select prod || terraform workspace new prod
+          working-directory: ${{ env.WORKING_DIR }}
+        
+        - name: Terraform plan
+          run: terraform plan
+          working-directory: ${{ env.WORKING_DIR }}
+        
+        - name: Terraform apply prod
+          run: terraform apply -auto-approve
+          working-directory: ${{ env.WORKING_DIR }}
