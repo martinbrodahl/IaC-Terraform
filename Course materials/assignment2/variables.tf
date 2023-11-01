@@ -100,13 +100,13 @@ variable "vm_username" {
 ###### Variables for locals ######
 ##################################
 variable "common_tags_company" {
-  type = string
-  default = "OperaTerra AS"
+  type        = string
+  default     = "OperaTerra AS"
   description = "Name of company, used in 'common_tags'"
 }
 
 variable "common_tags_project" {
-  type = string
-  default = "Assignment 1, IIK3005 IaC"
+  type        = string
+  default     = "Assignment 1, IIK3005 IaC"
   description = "Name of project, used in 'common_tags'"
 }
