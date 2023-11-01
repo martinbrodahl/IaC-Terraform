@@ -1,5 +1,5 @@
 resource "azurerm_network_security_group" "nsg" {
-  name                = local.nsg_name
+  name                = "${local.nsg_name}-${var.base_name}"
   location            = azurerm_resource_group.rg-infra.location
   resource_group_name = azurerm_resource_group.rg-infra.name
 
@@ -7,7 +7,7 @@ resource "azurerm_network_security_group" "nsg" {
 }
 
 resource "azurerm_virtual_network" "vnet" {
-  name                = local.vnet_name
+  name                = "${local.vnet_name}-${var.base_name}"
   location            = azurerm_resource_group.rg-infra.location
   resource_group_name = azurerm_resource_group.rg-infra.name
   address_space       = ["10.0.0.0/16"]
@@ -17,7 +17,7 @@ resource "azurerm_virtual_network" "vnet" {
 }
 
 resource "azurerm_subnet" "subnet" {
-  name                 = local.subnet_name
+  name                 = "${local.subnet_name}-${var.base_name}"
   resource_group_name  = azurerm_resource_group.rg-infra.name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.0.0.0/24"]
