@@ -9,9 +9,8 @@ terraform {
     resource_group_name  = "rg-backend-tfstate-week39"
     storage_account_name = "sabtfstatezzg70n9zod"
     container_name       = "sc-backend-tfstate-week39"
-    key                  = "assignment2.terraform.tfstate"  # ELLER se under vvv
+    key                  = "assignment2.terraform.tfstate"
   }
-  # key                  = "assignment2-${local.workspaces_suffix}.terraform.tfstate"
 }
 
 provider "azurerm" {

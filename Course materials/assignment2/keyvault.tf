@@ -1,7 +1,7 @@
 data "azurerm_client_config" "current" {}
 
 resource "azurerm_key_vault" "kv" {
-  name                        = "${local.kv_name}${var.base_name}${random_string.random_string.result}"
+  name                        = "${local.kv_name}-${var.base_name}${random_string.random_string.result}"
   location                    = azurerm_resource_group.rg-infra.location
   resource_group_name         = azurerm_resource_group.rg-infra.name
   enabled_for_disk_encryption = true
@@ -27,6 +27,8 @@ resource "azurerm_key_vault" "kv" {
       "Backup", "Delete", "DeleteSAS", "Get", "GetSAS", "List", "ListSAS", "Purge", "Recover", "RegenerateKey", "Restore", "Set", "SetSAS", "Update"
     ]
   }
+
+  tags = local.common_tags
 }
 
 resource "azurerm_key_vault_secret" "sa-accesskey" {
@@ -36,6 +38,8 @@ resource "azurerm_key_vault_secret" "sa-accesskey" {
   depends_on = [
     azurerm_storage_account.sa
   ]
+
+  tags = local.common_tags
 }
 
 resource "azurerm_key_vault_secret" "vm-password" {
@@ -45,4 +49,6 @@ resource "azurerm_key_vault_secret" "vm-password" {
   depends_on = [
     random_password.password
   ]
+
+  tags = local.common_tags
 }

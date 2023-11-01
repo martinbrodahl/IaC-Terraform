@@ -4,6 +4,8 @@ resource "azurerm_storage_account" "sa" {
   location                 = azurerm_resource_group.rg-infra.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
+
+  tags = local.common_tags
 }
 
 resource "azurerm_storage_container" "sc" {
