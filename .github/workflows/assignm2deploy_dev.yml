@@ -5,6 +5,8 @@ name: 'Assignment 2: Deploy infrastructure - Dev workspace'
 # Controls when the workflow will run
 on:
   pull_request:
+    types:
+      - 'closed'
     branches:
       - 'dev' 
     paths:
@@ -19,6 +21,7 @@ env:
   
 jobs:
     dev:
+      if: github.event.pull_request.merged == true
       runs-on: ubuntu-latest
       steps:
         - name: Checkout
