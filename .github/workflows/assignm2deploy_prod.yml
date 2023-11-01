@@ -4,11 +4,13 @@ name: 'Assignment 2: Deploy infrastructure - Prod workspace'
 
 # Controls when the workflow will run
 on:
-  pull_request:
-    branches:
-      - 'prod' 
-    paths:
-      - 'Course materials/assignment2/**'
+    pull_request:
+      types:
+        - 'closed'
+      branches:
+        - 'main' 
+      paths:
+        - 'Course materials/assignment2/**'
 
 env:
   ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
@@ -18,7 +20,8 @@ env:
   WORKING_DIR: ./Course materials/assignment2
   
 jobs:
-    prod:
+    Deploy_prod:
+      if: github.event.pull_request.head.ref == 'prod'
       runs-on: ubuntu-latest
       environment: 
         name: production

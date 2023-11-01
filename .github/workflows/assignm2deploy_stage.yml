@@ -4,11 +4,13 @@ name: 'Assignment 2: Deploy infrastructure - Stage workspace'
 
 # Controls when the workflow will run
 on:
-  pull_request:
-    branches:
-      - 'staging' 
-    paths:
-      - 'Course materials/assignment2/**'
+    pull_request:
+      types:
+        - 'closed'
+      branches:
+        - 'main' 
+      paths:
+        - 'Course materials/assignment2/**'
 
 env:
   ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
@@ -18,7 +20,8 @@ env:
   WORKING_DIR: ./Course materials/assignment2
   
 jobs:
-    stage:
+    Deploy_stage:
+      if: github.event.pull_request.head.ref == 'staging'
       runs-on: ubuntu-latest
       steps:
         - name: Checkout
