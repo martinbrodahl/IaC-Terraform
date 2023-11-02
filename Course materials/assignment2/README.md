@@ -1,29 +1,28 @@
-1. Endre branch til dev | staging | prod
-2. Push endring til branchen -> dette vil trigge validate action. Velger ved en push da dette betyr en endring som må valideres.
-3. Hvis denne var successfull -> create PR "staging <- dev" (da manuelt)
-4. Den PR vil aktivere en deploy som kjører plan & apply for hvert workspace i dev
-   - Utenom prod da her trengs det manuell godkjenning
-5. ---||---, pkt.1-4
-6. PR "prod <- staging"
-7. Til slutt sitter man igjen med en full deployed (og godkjent av testene) infrastruktur i prod branchen
+The Terraform configuration uses 4 workspaces "default | dev | stage | prod". The default workspace are used as a starting point.During edits & configuration a branch will be made "dev | staging | prod" which correlates the workspace we are currently deveopling in.
+The main branch are our base. Dvs. vi oppretter midlertidlige branches hvor vi gjør endringer, når jobben er ferdig så merger man dette med main, slik at main alltid har et (foreløpig) ferdig produkt.
 
-3 workspaces "dev | stage | prod". Kobles opp mot hver sin branch.
-1. Starter i default-workspace.
-2. Oppretter branch "dev | staging | prod".
-3. Gjøre kode-endringer i branchen. Ved push vil dette trigge en validate-action i den gjeldende branchen.
-4. Hvis denne var successfull -> create PR "main <- den gjeldende branchen" (da manuelt).
-5. PR vil trigge en deploy-action som plan & apply'er infrastrukturen til dev-workspace.
-6. Slette den gjeldende branchen.
-7. Repeat (i forhold til neste workspace, da stage).
+1. Starter alltid med utgangspunkt i default-workspace.
+2. Oppretter midlertidlig branch "dev | staging | prod". (da manuelt)
+3. Gjøre kode-endringer i branchen. Ved push vil dette trigge en validate-action på den gjeldende branchen.
+4. Hvis denne var successfull: create PR "main <- den gjeldende branchen" (da manuelt).
+   - Hvis ikke successfull fortsetter man å gjøre kode-endringer og push'e dette helt til successfull validate-action.
+5. PR vil trigge en deploy-action som plan & apply'er infrastrukturen til dev-workspace, ETTER at den gjeldende branchen successfully er merget sammen med main.
+6. Slette den midlertidlige opprettede branchen (dette gjør man under PR), ettersom at vi er ferdige med arbeidet.
+7. Repeat (i forhold til neste workspace, da stage, så prod).
 8. [...]
-9. I prod-workspacen så trengs det en godkjennelse i pkt.4!
+9. I prod-workspacen så trengs det en godkjennelse i pkt.5 for å deploye infrastrukturen!
 
+Dette sikrer en profesjonell CICD i med gradvis utvikling til et ferdigstående produkt. 
+
+Slik er CICDen satt opp:
 Workspace:
 default -> dev    (dev-branch)
             |
+            |          PR
             v
 default -> stage  (staging-branch)
             |
+            |          PR
             v
 default -> prod   (prod-branch)
             ||
