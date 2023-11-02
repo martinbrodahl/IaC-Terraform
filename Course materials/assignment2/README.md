@@ -1,21 +1,22 @@
-The Terraform configuration uses 4 workspaces "default | dev | stage | prod". The default workspace are used as a starting point.During edits & configuration a branch will be made "dev | staging | prod" which correlates the workspace we are currently deveopling in.
-The main branch are our base. Dvs. vi oppretter midlertidlige branches hvor vi gjør endringer, når jobben er ferdig så merger man dette med main, slik at main alltid har et (foreløpig) ferdig produkt.
+The Terraform configuration uses 4 workspaces "default | dev | stage | prod". The default workspace are used as a starting point.During edits & configuration a branch will be made "dev | staging | prod", which correlates to the workspace we are currently deveopling in.
+The main branch are our base, i.e. we create temporarily branches where we make changes, when the job is finished we merge the temporarily branch with main, so main always has a (currently) finished product.
 
-1. Starter alltid med utgangspunkt i default-workspace.
-2. Oppretter midlertidlig branch "dev | staging | prod". (da manuelt)
-3. Gjøre kode-endringer i branchen. Ved push vil dette trigge en validate-action på den gjeldende branchen.
-4. Hvis denne var successfull: create PR "main <- den gjeldende branchen" (da manuelt).
+PR = (GitHub) Pull Request
+
+1. Always start from the default-workspace.
+2. Create temporarily branch "dev | staging | prod". (manually)
+3. Make code-changes in the branch. Upon push, this will trigger a validate-action on the current branch.
+4. If it was successfull: create PR "main <- the current branchen" (manually).
    - Hvis ikke successfull fortsetter man å gjøre kode-endringer og push'e dette helt til successfull validate-action.
 5. PR vil trigge en deploy-action som plan & apply'er infrastrukturen til dev-workspace, ETTER at den gjeldende branchen successfully er merget sammen med main.
 6. Slette den midlertidlige opprettede branchen (dette gjør man under PR), ettersom at vi er ferdige med arbeidet.
 7. Repeat (i forhold til neste workspace, da stage, så prod).
 8. [...]
-9. I prod-workspacen så trengs det en godkjennelse i pkt.5 for å deploye infrastrukturen!
+9. In the prod-workspace, it needs an approval in pt.5 to deploy the infrastructure!
 
-Dette implements a good CICD workflow with gradvis utvikling til et ferdigstående produkt. 
-which is scalabe, secure and easy maintainable.
+This implements a good CICD workflow with step by step development from start to the finished infrastructure, which also is scalabe, secure and easy maintainable.
 
-Slik er CICDen satt opp:
+The CICD is orchestrated like this:
 Workspace:
 default -> dev    (dev-branch)
             |
@@ -27,4 +28,4 @@ default -> stage  (staging-branch)
             v
 default -> prod   (prod-branch)
             ||
-      Ferdig infrastruktur
+   Finished infrastructure
