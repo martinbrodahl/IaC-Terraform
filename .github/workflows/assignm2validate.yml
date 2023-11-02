@@ -66,24 +66,37 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Terraform init
-        id: init
         run: terraform init
         working-directory: ${{ env.WORKING_DIR }}          
 
       - name: Terraform validate
-        id: validate
         run: terraform validate
         working-directory: ${{ env.WORKING_DIR }}
   
   
-  #tflint:
-   # name: 'TFlint'
+  tflint:
+    name: 'Tflint'
     # The type of runner that the job will run on
-    #runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
     
-    #env:
-     # ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-      #ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-      #ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      #ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      #WORKING_DIR: ./Course materials/assignment2
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      WORKING_DIR: ./Course materials/assignment2
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Terraform init
+        run: terraform init
+        working-directory: ${{ env.WORKING_DIR }} 
+
+      - name: Tflint init
+        run: tflint --init
+        working-directory: ${{ env.WORKING_DIR }} 
+
+      - name: Tflint
+        run: tflint
+        working-directory: ${{ env.WORKING_DIR }} 
