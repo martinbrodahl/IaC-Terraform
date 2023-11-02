@@ -12,7 +12,8 @@ The main branch are our base. Dvs. vi oppretter midlertidlige branches hvor vi g
 8. [...]
 9. I prod-workspacen så trengs det en godkjennelse i pkt.5 for å deploye infrastrukturen!
 
-Dette sikrer en profesjonell CICD i med gradvis utvikling til et ferdigstående produkt. 
+Dette implements a good CICD workflow with gradvis utvikling til et ferdigstående produkt. 
+which is scalabe, secure and easy maintainable.
 
 Slik er CICDen satt opp:
 Workspace:
