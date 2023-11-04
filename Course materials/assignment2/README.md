@@ -30,5 +30,3 @@ default --> stage  (staging-branch)    |
 default --> prod   (prod-branch)       |
             ||                         |
    Finished infrastructure             |
-   
-mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
