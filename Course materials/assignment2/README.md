@@ -18,14 +18,14 @@ This implements a good CICD workflow with step by step development from start to
 
 The CICD is orchestrated like this:
 Workspace:
-default -> dev    (dev-branch)
-            |
-            |          PR
-            v
-default -> stage  (staging-branch)
-            |
-            |          PR
-            v
-default -> prod   (prod-branch)
-            ||
-   Finished infrastructure
+default -> dev    (dev-branch)        |
+         |                            | 
+         |          PR                |
+         v                            |
+default -> stage  (staging-branch)    |    
+         |                            |    =    CICD
+         |          PR                |
+         v                            |
+default -> prod   (prod-branch)       |
+            ||                        |
+   Finished infrastructure            |
