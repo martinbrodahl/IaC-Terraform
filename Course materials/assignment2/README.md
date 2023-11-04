@@ -5,7 +5,7 @@ PR = (GitHub) Pull Request
 
 How to use this script:
 1. Always start from the default-workspace.
-2. Create temporarily branch "dev | staging | prod". (manually)
+2. Create temporarily branch "dev | staging | prod" (manually). Remember to publish the branch to Github.
 3. Make code-changes in the branch. Upon push, this will trigger a validate-action on the current branch.
 4. If it was successful: create PR "main <- the current branch" (manually).
    - If not successful: contintue to make code-changes and push this, until the validate-action is successful.
