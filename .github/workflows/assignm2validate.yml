@@ -74,11 +74,14 @@ jobs:
         working-directory: ${{ env.WORKING_DIR }}
     
   tflint:
-    runs-on: ${{ matrix.os }}
+    name: 'Tflint'
+    runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
+    #runs-on: ${{ matrix.os }}
+
+    #strategy:
+      #matrix:
+        #os: [ubuntu-latest]
 
     steps:
     - uses: actions/checkout@v3
@@ -88,7 +91,7 @@ jobs:
       name: Cache plugin dir
       with:
         path: ~/.tflint.d/plugins
-        key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
+        key: ubuntu-latest-tflint-${{ hashFiles('.tflint.hcl') }}
 
     - uses: terraform-linters/setup-tflint@v3
       name: Setup TFLint
