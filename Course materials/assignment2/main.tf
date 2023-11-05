@@ -21,4 +21,4 @@ output "vm_password" {
   sensitive = true
 }
 
-# Test stage
+# Test prod
