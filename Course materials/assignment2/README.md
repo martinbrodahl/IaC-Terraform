@@ -16,17 +16,3 @@ How to use this script:
 9. In the prod-workspace, it needs an approval in pt.5 to deploy the infrastructure!
 
 This implements a good CICD workflow with step by step development from start to the finished infrastructure, which is also scalable, secure and easy maintainable.
-
-The CICD is orchestrated like this:
-Workspace:
-default --> dev    (dev-branch)        |
-         |                             | 
-         |          PR                 |
-         v                             |
-default --> stage  (staging-branch)    |    
-         |                             |    =    CICD
-         |          PR                 |
-         v                             |
-default --> prod   (prod-branch)       |
-            ||                         |
-   Finished infrastructure             |
