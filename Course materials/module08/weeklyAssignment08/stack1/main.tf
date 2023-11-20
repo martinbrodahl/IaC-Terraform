@@ -1,6 +1,40 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source = "hashicorp/azurerm"
+      version = "3.81.0"
+    }
+  }
+  backend "azurerm" {
+    resource_group_name  = "rg-backend-tfstate-week39"
+    storage_account_name = "sabtfstatezzg70n9zod"
+    container_name       = "sc-backend-tfstate-week39"
+    key                  = "module08.terraform.tfstate"
+  }
+}
+
+provider "azurerm" {
+}
+
 resource "azurerm_resource_group" "example" {
-  name     = "example-resources"
+  name     = local.rg_name
   location = var.location
+
+  tags = local.common_tags
+}
+
+resource "azurerm_virtual_network" "example" {
+  name                = "example-network"
+  address_space       = ["10.0.0.0/16"]
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
+}
+
+resource "azurerm_subnet" "example" {
+  name                 = "internal"
+  resource_group_name  = azurerm_resource_group.example.name
+  virtual_network_name = azurerm_virtual_network.example.name
+  address_prefixes     = ["10.0.2.0/24"]
 }
 
 resource "azurerm_network_interface" "example" {
@@ -21,6 +55,7 @@ resource "azurerm_linux_virtual_machine" "example" {
   location            = azurerm_resource_group.example.location
   size                = "Standard_F2"
   admin_username      = "adminuser"
+  admin_password      = "adminpassword" 
   network_interface_ids = [
     azurerm_network_interface.example.id,
   ]
