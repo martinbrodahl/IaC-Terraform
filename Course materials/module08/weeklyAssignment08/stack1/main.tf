@@ -13,9 +13,6 @@ terraform {
   }
 }
 
-provider "azurerm" {
-}
-
 resource "azurerm_resource_group" "example" {
   name     = local.rg_name
   location = var.location

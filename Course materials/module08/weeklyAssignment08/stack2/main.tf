@@ -7,10 +7,6 @@ terraform {
   }
 }
 
-provider "azurerm" {
-  # Configuration options
-}
-
 resource "azurerm_resource_group" "example" {
   name     = "example-resources"
   location = "West Europe"
