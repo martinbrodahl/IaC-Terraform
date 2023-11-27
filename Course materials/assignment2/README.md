@@ -9,7 +9,7 @@ How to use this script:
 3. Make code-changes in the branch. Upon push, this will trigger a validate-action on the current branch.
 4. If it was successful: create PR "main <- the current branch" (manually).
    - If not successful: contintue to make code-changes and push this, until the validate-action is successful.
-5. PR will trigger a deploy-action that plan & apply the infrastructure to the "dev | stage | prod"-workspace, AFTER the current branch is successfully merget together with the main branch.
+5. PR will trigger a deploy-action that plan & apply the infrastructure to the "dev | stage | prod"-workspace, AFTER the current branch is successfully merged together with the main branch.
 6. Delete the temporarily branch (this is done manually during PR), as we have finished the work.
 7. Repeat (in relation to the next workspace, in this case: first stage-workspace and then prod-workspace).
 8. [...]
